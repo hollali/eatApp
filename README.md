@@ -1,9 +1,9 @@
 <div align="center">
-  <br />
+  <!--<br />
     <a href="https://www.youtube.com/watch?v=LKrX390fJMw" target="_blank">
       <img src="assets/readme/hero.png" alt="Project Banner">
     </a>
-  <br />
+  <br />-->
 
   <div>
     <img src="https://img.shields.io/badge/-React_Native-black?style=for-the-badge&logoColor=white&logo=react&color=61DAFB" alt="React Native" />
