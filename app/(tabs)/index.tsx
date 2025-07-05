@@ -3,7 +3,6 @@ import cn from 'clsx';
 import { Fragment } from "react";
 import { FlatList, Image, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import "./globals.css";
 import CartButton from "@/components/cartButton";
 
 export default function Index() {
