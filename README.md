@@ -139,7 +139,7 @@ Assets and snippets used in the project can be found in the **[video kit](https:
   <img src="assets/readme/videokit.png" alt="Video Kit Banner">
 </a>
 
-## <a name="more">🚀 More</a>
+<!--## <a name="more">🚀 More</a>
 
 **Advance your skills with Next.js Pro Course**
 
@@ -148,5 +148,5 @@ Enjoyed creating this project? Dive deeper into our PRO courses for a richer lea
 detailed explanations, cool features, and exercises to boost your skills. Give it a go!
 
 <a href="https://jsm.dev/rn-food-jsm" target="_blank">
-   <img src="assets/readme/jsmpro.png" alt="Project Banner">
+   <img src="assets/readme/jsmpro.png" alt="Project Banner">-->
 </a>
