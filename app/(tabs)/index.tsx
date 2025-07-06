@@ -8,7 +8,6 @@ import CartButton from "@/components/cartButton";
 export default function Index() {
 	return (
 		<SafeAreaView className="flex-1 bg-white">
-      
       <FlatList data={offers}
       renderItem={({item,index}) =>{
         const isEven = index % 2 === 0;
