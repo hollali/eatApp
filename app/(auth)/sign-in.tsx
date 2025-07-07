@@ -6,7 +6,7 @@ const SignIn = () => {
 	return (
 		<View>
 			<Text>SignIn</Text>
-            <Button title="Sign In" onPress={() => router.push("/sign-up")} />
+            <Button title="Sign Up" onPress={() => router.push("/sign-up")} />
 		</View>
 	);
 };
