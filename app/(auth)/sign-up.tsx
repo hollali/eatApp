@@ -52,7 +52,7 @@ const SignUP = () => {
 				<View className="flex justify-center mt-5 flex-row gap-2">
 					<Text className="base-regular text-gray-100">
 						Already have an account?
-						<Link href="/sign-in" className="base-bold text-primary ml-2">Sign Up</Link>
+						<Link href="/sign-in" className="base-bold text-primary ml-2">Sign In</Link>
 					</Text>
 				</View>	
 		</View>
