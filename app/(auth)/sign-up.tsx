@@ -24,24 +24,24 @@ const SignUP = () => {
 	return (
 		<View className="gap-10 bg-white rounded-lg p-5 mt-5">
 			<CustomInput
-				placeholder="Enter Fullname"
+				placeholder="Fullname"
 				value={form.name}
 				onChangeText={(text) => setForm((prev) =>({...form, name: text}))}
-				label="Fullname"
+				label="Enter Your Fullname"
 				keyboardType="default"
 				/>
 			<CustomInput
 				placeholder="Email"
 				value={form.email}
 				onChangeText={(text) => setForm((prev) =>({...form, email: text}))}
-				label="Enter Email Address"
+				label="Enter Your Email Address"
 				keyboardType="email-address"
 				/>
 				<CustomInput
 				placeholder="Password"
 				value={form.password}
 				onChangeText={(text) => setForm((prev) =>({...form, password: text}))}
-				label="Enter Password"
+				label="Enter Your Password"
 				secureTextEntry={true}
 				/>
 				<CustomButton
@@ -51,7 +51,7 @@ const SignUP = () => {
 				/>
 				<View className="flex justify-center mt-5 flex-row gap-2">
 					<Text className="base-regular text-gray-100">
-						Don&#39;t have an account?
+						Already have an account?
 						<Link href="/sign-in" className="base-bold text-primary ml-2">Sign Up</Link>
 					</Text>
 				</View>	

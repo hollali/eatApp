@@ -27,14 +27,14 @@ const SignIn = () => {
 				placeholder="Email"
 				value={form.email}
 				onChangeText={(text) => setForm((prev) =>({...form, email: text}))}
-				label="Enter Email Address"
+				label="Enter Your Email Address"
 				keyboardType="email-address"
 				/>
 				<CustomInput
 				placeholder="Password"
 				value={form.password}
 				onChangeText={(text) => setForm((prev) =>({...form, password: text}))}
-				label="Enter Password"
+				label="Enter Your Password"
 				secureTextEntry={true}
 				/>
 				<CustomButton
