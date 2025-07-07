@@ -1,8 +1,54 @@
+import { CreateUserParams, SignInParams, } from '@/type';
+import { Account, Avatars, Client, Databases, ID } from "react-native-appwrite";
+
 export const appwriteConfig = {
-    project: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
-	endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT,
+    project: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!,
+	endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
     platform: "com.hollali.eatApp",
     databaseId: '686b7b4f000b31a8b2f6',
     userCollectionId: '686b7b9f00160656de2a',
 };
 
+export const client = new Client();
+client
+    .setEndpoint(appwriteConfig.endpoint)
+    .setProject(appwriteConfig.project)
+    .setPlatform(appwriteConfig.platform) // Use this only for development, not recommended for production
+
+export const account = new Account(client); 
+export const databases = new Databases(client);   
+const avatars = new Avatars(client);
+
+export const createUser = async ({email, password, name}: CreateUserParams) => {
+    try {
+        const newAccount = await account.create(
+            ID.unique(),email,password,name
+        );
+        if(!newAccount) throw Error;
+        await signIn({ email, password });
+
+        const avatarUrl = await avatars.getInitialsURL(name);
+
+        return await databases.createDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.userCollectionId,
+            ID.unique(),
+            {
+                name,
+                email,
+                accountId: newAccount.$id,
+                avatar:avatarUrl
+            }
+        );
+    } catch (e) {
+        throw new Error((e as Error).message);
+    }
+}
+
+export const signIn = async ({email,password}: SignInParams) => {
+    try {
+        const session = await account.createEmailPasswordSession(email, password);
+    } catch (e) {
+        throw new Error(e as string);
+    }
+}

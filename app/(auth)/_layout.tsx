@@ -1,5 +1,3 @@
-import CustomButton from "@/components/customButton";
-import CustomInput from "@/components/customInput";
 import { images } from "@/constants";
 import { Slot } from "expo-router";
 import React from "react";
