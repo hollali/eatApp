@@ -45,7 +45,7 @@ const SignUP = () => {
 				secureTextEntry={true}
 				/>
 				<CustomButton
-				title="Sign In"
+				title="Sign Up"
 				isLoading={isSubmitting}
 				onPress={submit}
 				/>
