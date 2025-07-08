@@ -21,9 +21,7 @@ const avatars = new Avatars(client);
 
 export const createUser = async ({email, password, name}: CreateUserParams) => {
     try {
-        const newAccount = await account.create(
-            ID.unique(),email,password,name
-        );
+        const newAccount = await account.create(ID.unique(),email,password,name)
         if(!newAccount) throw Error;
         await signIn({ email, password });
 
@@ -33,12 +31,7 @@ export const createUser = async ({email, password, name}: CreateUserParams) => {
             appwriteConfig.databaseId,
             appwriteConfig.userCollectionId,
             ID.unique(),
-            {
-                name,
-                email,
-                accountId: newAccount.$id,
-                avatar:avatarUrl
-            }
+            { name, email,accountId: newAccount.$id, avatar:avatarUrl}
         );
     } catch (e) {
         throw new Error((e as Error).message);
@@ -48,6 +41,7 @@ export const createUser = async ({email, password, name}: CreateUserParams) => {
 export const signIn = async ({email,password}: SignInParams) => {
     try {
         const session = await account.createEmailPasswordSession(email, password);
+        return session;
     } catch (e) {
         throw new Error(e as string);
     }
