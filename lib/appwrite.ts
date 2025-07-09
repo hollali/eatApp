@@ -3,6 +3,7 @@ import { Account, Avatars, Client, Databases, ID, Query } from "react-native-app
 
 export const appwriteConfig = {
     project: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!,
+    androidProject: process.env.EXPO_PUBLIC_APPWRITE_ANDROID_PROJECT_ID!,
 	endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
     platform: "com.hollali.eatApp",
     databaseId: '686b7b4f000b31a8b2f6',
