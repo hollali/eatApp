@@ -17,7 +17,7 @@ const SignUP = () => {
 
 			try {
 				//! Appwrite Sign Up Logic
-				await createUser({ email, password, name });
+				await createUser({ email, password, name })
 				router.replace("/");
 			} catch (error: any) {
 				Alert.alert("Error", error.message);
