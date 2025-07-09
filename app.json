@@ -41,7 +41,8 @@
           "project": "react-native_eatapp",
           "organization": "hollali"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
