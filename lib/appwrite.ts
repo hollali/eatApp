@@ -8,6 +8,9 @@ export const appwriteConfig = {
     platform: "com.hollali.eatApp",
     databaseId: '686b7b4f000b31a8b2f6',
     userCollectionId: '686b7b9f00160656de2a',
+    categoriesCollectionId: '686fafb400257faa137e',
+    menuCollectionId:'686fb0cf001daee41779',
+    customizationsCollectionId: '686fb3fd0031b16258e6',
 };
 
 export const client = new Client();
