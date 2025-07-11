@@ -1,5 +1,5 @@
 import { CreateUserParams, SignInParams, } from '@/type';
-import { Account, Avatars, Client, Databases, ID, Query } from "react-native-appwrite";
+import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-native-appwrite";
 
 export const appwriteConfig = {
     project: process.env.EXPO_PUBLIC_APPWRITE_IOS_PROJECT_ID!,
@@ -7,6 +7,7 @@ export const appwriteConfig = {
 	endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
     platform: "com.hollali.eatApp",
     databaseId: '686b7b4f000b31a8b2f6',
+    bucketId: '686ff46f000e84a9b871',
     userCollectionId: '686b7b9f00160656de2a',
     categoriesCollectionId: '686fafb400257faa137e',
     menuCollectionId:'686fb0cf001daee41779',
@@ -21,7 +22,8 @@ client
     .setPlatform(appwriteConfig.platform) // Use this only for development, not recommended for production
 
 export const account = new Account(client); 
-export const databases = new Databases(client);   
+export const databases = new Databases(client);
+export const storage = new Storage(client);   
 const avatars = new Avatars(client);
 
 export const createUser = async ({email, password, name}: CreateUserParams) => {
