@@ -2,8 +2,8 @@ import { CreateUserParams, GetMenuParams, SignInParams, } from '@/type';
 import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-native-appwrite";
 
 export const appwriteConfig = {
-    projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!,
-    androidProject: process.env.EXPO_PUBLIC_APPWRITE_ANDROID_PROJECT_ID!,
+    projectId: process.env.EXPO_PUBLIC_APPWRITE_IOS_PROJECT_ID!,
+    androidProjectId: process.env.EXPO_PUBLIC_APPWRITE_ANDROID_PROJECT_ID!,
 	endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
     platform: "com.hollali.eatApp",
     databaseId: '686b7b4f000b31a8b2f6',
