@@ -2,6 +2,7 @@ import CartItem from "@/components/cartItem";
 import CustomButton from "@/components/customButton";
 import CustomHeader from "@/components/customHeader";
 import { useCartStore } from "@/store/cart.store";
+import { PaymentInfoStripeProps } from "@/type";
 import cn from "clsx";
 import { FlatList, Text, View } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
