@@ -2,7 +2,7 @@ import { CreateUserParams, GetMenuParams, SignInParams, } from '@/type';
 import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-native-appwrite";
 
 export const appwriteConfig = {
-    project: process.env.EXPO_PUBLIC_APPWRITE_IOS_PROJECT_ID!,
+    projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!,
     androidProject: process.env.EXPO_PUBLIC_APPWRITE_ANDROID_PROJECT_ID!,
 	endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
     platform: "com.hollali.eatApp",
@@ -18,7 +18,7 @@ export const appwriteConfig = {
 export const client = new Client();
 client
     .setEndpoint(appwriteConfig.endpoint)
-    .setProject(appwriteConfig.project)
+    .setProject(appwriteConfig.projectId)
     .setPlatform(appwriteConfig.platform) // Use this only for development, not recommended for production
 
 export const account = new Account(client); 

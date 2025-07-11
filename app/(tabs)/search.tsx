@@ -1,8 +1,10 @@
 import CartButton from '@/components/cartButton'
 import Filter from '@/components/filter'
+import MenuCard from '@/components/menuCard'
 import SearchBar from '@/components/searchBar'
 import { getCategories, getMenu } from '@/lib/appwrite'
 import useAppwrite from '@/lib/useAppwrite'
+import { MenuItem } from '@/type'
 import { useLocalSearchParams } from 'expo-router'
 import React, { useEffect } from 'react'
 import { FlatList, Text, View } from 'react-native'
@@ -24,7 +26,7 @@ const Search = () => {
       renderItem={( {item,index} ) =>{
         return (
           <View className='flex-1 maw-w-[48%]'>
-            <Text>Menu Cart</Text>
+            <MenuCard item={item as MenuItem} />
           </View>
         )}}
         keyExtractor={item => item.$id}
