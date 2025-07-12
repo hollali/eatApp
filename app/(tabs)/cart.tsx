@@ -34,7 +34,7 @@ const Cart = () => {
                 ListHeaderComponent={() => <CustomHeader title="Cart" />}
                 ListEmptyComponent={() => 
                 <View className="flex-1 items-center justify-center mt-20">
-                    <Text className="text-lg font-semibold text-gray-500">
+                    <Text className="text-3xl font-extrabold text-primary">
                         Your Cart is Empty
                     </Text>
                 </View>}
