@@ -32,7 +32,12 @@ const Cart = () => {
                 keyExtractor={(item) => item.id}
                 contentContainerClassName="pb-28 px-5 pt-5"
                 ListHeaderComponent={() => <CustomHeader title="Cart" />}
-                ListEmptyComponent={() => <Text>Your Cart Empty</Text>}
+                ListEmptyComponent={() => 
+                <View className="flex-1 items-center justify-center mt-20">
+                    <Text className="text-lg font-semibold text-gray-500">
+                        Your Cart is Empty
+                    </Text>
+                </View>}
                 ListFooterComponent={() => totalItems > 0 && (
                     <View className="gap-5">
                         <View className="mt-6 border border-gray-200 p-5 rounded-2xl">
