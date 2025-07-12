@@ -5,7 +5,6 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 
 const CartItem = ({ item }: { item: CartItemType }) => {
     const { increaseQty, decreaseQty, removeItem } = useCartStore();
-
     return (
         <View className="cart-item">
             <View className="flex flex-row items-center gap-x-3">
@@ -16,13 +15,11 @@ const CartItem = ({ item }: { item: CartItemType }) => {
                         resizeMode="cover"
                     />
                 </View>
-
                 <View>
                     <Text className="base-bold text-dark-100">{item.name}</Text>
                     <Text className="paragraph-bold text-primary mt-1">
                         ${item.price}
                     </Text>
-
                     <View className="flex flex-row items-center gap-x-4 mt-2">
                         <TouchableOpacity
                             onPress={() => decreaseQty(item.id, item.customizations!)}
@@ -35,9 +32,7 @@ const CartItem = ({ item }: { item: CartItemType }) => {
                                 tintColor={"#FF9C01"}
                             />
                         </TouchableOpacity>
-
                         <Text className="base-bold text-dark-100">{item.quantity}</Text>
-
                         <TouchableOpacity
                             onPress={() => increaseQty(item.id, item.customizations!)}
                             className="cart-item__actions"
@@ -52,7 +47,6 @@ const CartItem = ({ item }: { item: CartItemType }) => {
                     </View>
                 </View>
             </View>
-
             <TouchableOpacity
                 onPress={() => removeItem(item.id, item.customizations!)}
                 className="flex-center"
