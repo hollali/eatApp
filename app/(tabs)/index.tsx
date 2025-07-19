@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function Index() {
   const {user} = useAuthStore();
 
-  const [city, setCity] = useState("Fetching...");
+  const [city, setCity] = useState("Fetching Location....");
 
   useEffect(() => {
     (async () => {
