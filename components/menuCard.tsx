@@ -4,7 +4,7 @@ import { MenuItem } from "@/type";
 import { Image, Platform, Text, TouchableOpacity } from 'react-native';
 
 const MenuCard = ({ item: { $id, image_url, name, price }}: { item: MenuItem}) => {
-    const imageUrl = `${image_url}?project=${appwriteConfig.projectId}}`;
+    const imageUrl = `${image_url}?project=${appwriteConfig.projectId}`;
     const { addItem } = useCartStore();
 
     return (

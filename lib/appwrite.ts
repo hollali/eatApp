@@ -1,4 +1,5 @@
 import { CreateUserParams, GetMenuParams, SignInParams, } from '@/type';
+import { Platform } from 'react-native';
 import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-native-appwrite";
 
 export const appwriteConfig = {
@@ -18,7 +19,9 @@ export const appwriteConfig = {
 export const client = new Client();
 client
     .setEndpoint(appwriteConfig.endpoint)
-    .setProject(appwriteConfig.projectId)
+    .setProject(Platform.OS === 'android' 
+    ? appwriteConfig.androidProjectId 
+    : appwriteConfig.projectId)
     .setPlatform(appwriteConfig.platform) // Use this only for development, not recommended for production
 
 export const account = new Account(client); 
