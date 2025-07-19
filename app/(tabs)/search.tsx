@@ -8,7 +8,6 @@ import CartButton from "@/components/cartButton";
 import cn from "clsx";
 import MenuCard from "@/components/menuCard";
 import {MenuItem} from "@/type";
-
 import Filter from "@/components/filter";
 import SearchBar from "@/components/searchBar";
 
@@ -48,12 +47,9 @@ const Search = () => {
                                     <Text className="paragraph-semibold text-dark-100">Find your favorite food</Text>
                                 </View>
                             </View>
-
                             <CartButton />
                         </View>
-
                         <SearchBar />
-
                         <Filter categories={categories!} />
                     </View>
                 )}
