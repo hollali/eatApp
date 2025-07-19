@@ -13,7 +13,6 @@ import SearchBar from "@/components/searchBar";
 
 const Search = () => {
     const { category, query } = useLocalSearchParams<{query: string; category: string}>()
-
     const { data, refetch, loading } = useAppwrite({ fn: getMenu, params: { category,  query,  limit: 6, } });
     const { data: categories } = useAppwrite({ fn: getCategories });
 
