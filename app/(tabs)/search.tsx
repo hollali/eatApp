@@ -49,7 +49,11 @@ const Search = () => {
                             <CartButton />
                         </View>
                         <SearchBar />
-                        <Filter categories={categories!} />
+                        <Filter categories={categories ? categories.map((cat: any) => ({
+                            ...cat,
+                            name: cat.name ?? '',
+                            description: cat.description ?? ''
+                        })) : []} />
                     </View>
                 )}
                 ListEmptyComponent={() => !loading && <Text>No results</Text>}
