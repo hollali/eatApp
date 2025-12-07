@@ -4,13 +4,13 @@ import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-n
 export const appwriteConfig = {
     projectId: process.env.EXPO_PUBLIC_APPWRITE_IOS_PROJECT_ID!,
     androidProjectId: process.env.EXPO_PUBLIC_APPWRITE_ANDROID_PROJECT_ID!,
-	endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
+    endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
     platform: "com.hollali.eatApp",
     databaseId: '686b7b4f000b31a8b2f6',
     bucketId: '686ff46f000e84a9b871',
     userCollectionId: '686b7b9f00160656de2a',
     categoriesCollectionId: '686fafb400257faa137e',
-    menuCollectionId:'686fb0cf001daee41779',
+    menuCollectionId: '686fb0cf001daee41779',
     customizationsCollectionId: '686fb3fd0031b16258e6',
     menuCustomizationCollectionId: '686fb686003b3601fdcf'
 };
@@ -21,15 +21,15 @@ client
     .setProject(appwriteConfig.projectId)
     .setPlatform(appwriteConfig.platform) // Use this only for development, not recommended for production
 
-export const account = new Account(client); 
+export const account = new Account(client);
 export const databases = new Databases(client);
-export const storage = new Storage(client);   
+export const storage = new Storage(client);
 const avatars = new Avatars(client);
 
-export const createUser = async ({email, password, name}: CreateUserParams) => {
+export const createUser = async ({ email, password, name }: CreateUserParams) => {
     try {
-        const newAccount = await account.create(ID.unique(),email,password,name)
-        if(!newAccount) throw Error;
+        const newAccount = await account.create(ID.unique(), email, password, name)
+        if (!newAccount) throw Error;
         await signIn({ email, password });
 
         const avatarUrl = await avatars.getInitialsURL(name);
@@ -38,14 +38,14 @@ export const createUser = async ({email, password, name}: CreateUserParams) => {
             appwriteConfig.databaseId,
             appwriteConfig.userCollectionId,
             ID.unique(),
-            { name, email,accountId: newAccount.$id, avatar:avatarUrl}
+            { name, email, accountId: newAccount.$id, avatar: avatarUrl }
         );
     } catch (e) {
         throw new Error((e as Error).message);
     }
 }
 
-export const signIn = async ({email,password}: SignInParams) => {
+export const signIn = async ({ email, password }: SignInParams) => {
     try {
         const session = await account.createEmailPasswordSession(email, password);
         return session;
@@ -63,7 +63,7 @@ export const getCurrentUser = async () => {
             appwriteConfig.userCollectionId,
             [Query.equal('accountId', currentAccount.$id)]
         )
-        if (!currentUser) throw  Error;
+        if (!currentUser) throw Error;
         return currentUser.documents[0];
     } catch (e) {
         console.log(e);
@@ -74,8 +74,8 @@ export const getCurrentUser = async () => {
 export const getMenu = async ({ category, query }: GetMenuParams) => {
     try {
         const queries: string[] = [];
-        if(category) queries.push(Query.equal('categories', category));
-        if(query) queries.push(Query.search('name', query));
+        if (category) queries.push(Query.equal('categories', category));
+        if (query) queries.push(Query.search('name', query));
         const menus = await databases.listDocuments(
             appwriteConfig.databaseId,
             appwriteConfig.menuCollectionId,
