@@ -1,12 +1,14 @@
 import CustomButton from "@/components/customButton";
 import CustomInput from "@/components/customInput";
 import { createUser } from "@/lib/appwrite";
+import useAuthStore from "@/store/auth.store";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { Alert, Text, View } from "react-native";
 
 const SignUP = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { fetchAuthenticatedUser } = useAuthStore();
 	const [form, setForm] = useState({ name: "", email: "", password: "" });
 	const submit = async () => {
 		const { name, email, password } = form;
@@ -18,9 +20,10 @@ const SignUP = () => {
 			try {
 				//! Appwrite Sign Up Logic
 				await createUser({ email, password, name })
+				await fetchAuthenticatedUser();
 				router.replace("/");
-			} catch (error: any) {
-				Alert.alert("Error", error.message);
+			} catch (error) {
+				Alert.alert("Error", error instanceof Error ? error.message : String(error));
 			} finally {
 				setIsSubmitting(false);
 			}

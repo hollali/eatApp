@@ -9,7 +9,8 @@ export default function AuthLayout() {
 	if (isAuthenticated) return <Redirect href="/" />;
 	return (
 		<KeyboardAvoidingView
-			behavior={Platform.OS === "ios" ? "padding" : "height"}>
+			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			className="flex-1">
 			<ScrollView
 				className="bg-white h-full"
 				keyboardShouldPersistTaps="handled">

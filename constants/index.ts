@@ -157,6 +157,8 @@ export const toppings = [
     },
 ];
 
+export { colors } from "./theme";
+
 export const images = {
     avatar,
     avocado,

@@ -1,21 +1,29 @@
-import {images} from "@/constants";
+import {colors, images} from "@/constants";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { Image, TextInput, TouchableOpacity, View } from "react-native";
+import { useDebouncedCallback } from "use-debounce";
 
 const Searchbar = () => {
     const params = useLocalSearchParams<{ query: string }>();
-    const [query, setQuery] = useState(params.query);
+    const [query, setQuery] = useState(params.query ?? "");
+
+    const updateParams = (text: string) => {
+        if (text) router.setParams({ query: text });
+        else router.setParams({ query: undefined });
+    };
+
+    const debouncedUpdate = useDebouncedCallback(updateParams, 300);
 
     const handleSearch = (text: string) => {
         setQuery(text);
-
-        if(!text) router.setParams({ query: undefined });
+        debouncedUpdate(text);
     };
 
     const handleSubmit = () => {
-        if(query.trim()) router.setParams({ query });
-    }
+        debouncedUpdate.cancel();
+        updateParams(query.trim());
+    };
 
     return (
         <View className="searchbar">
@@ -30,13 +38,13 @@ const Searchbar = () => {
             />
             <TouchableOpacity
                 className="pr-5"
-                onPress={() => router.setParams({ query })}
+                onPress={handleSubmit}
             >
                 <Image
                     source={images.search}
                     className="size-6"
                     resizeMode="contain"
-                    tintColor="#5D5F6D"
+                    tintColor={colors.secondary}
                 />
             </TouchableOpacity>
         </View>

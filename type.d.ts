@@ -16,10 +16,17 @@ export interface Category extends Models.Document {
     description: string;
 }
 
+export interface Customization extends Models.Document {
+    name: string;
+    price: number;
+    type: string;
+}
+
 export interface User extends Models.Document {
     name: string;
     email: string;
     avatar: string;
+    favoriteMenuIds?: string[];
 }
 
 export interface CartCustomization {
@@ -90,6 +97,58 @@ interface ProfileFieldProps {
     icon: ImageSourcePropType;
 }
 
+export type OrderStatus =
+    | "pending"
+    | "confirmed"
+    | "preparing"
+    | "delivering"
+    | "delivered"
+    | "cancelled";
+
+export type PaymentMethod = "mobile_money" | "cash";
+
+export type MobileMoneyProvider = "MTN" | "AirtelTigo" | "Telecel";
+
+export interface OrderItem {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    customizations?: CartCustomization[];
+}
+
+export interface OrderAddress {
+    street: string;
+    city: string;
+    note?: string;
+}
+
+export interface Order extends Models.Document {
+    user: string;
+    items: OrderItem[];
+    subtotal: number;
+    deliveryFee: number;
+    discount: number;
+    total: number;
+    paymentMethod: PaymentMethod;
+    paymentPhone?: string;
+    mobileMoneyProvider?: MobileMoneyProvider;
+    address: OrderAddress;
+    status: OrderStatus;
+}
+
+export interface CreateOrderParams {
+    items: OrderItem[];
+    subtotal: number;
+    deliveryFee: number;
+    discount: number;
+    total: number;
+    paymentMethod: PaymentMethod;
+    paymentPhone?: string;
+    mobileMoneyProvider?: MobileMoneyProvider;
+    address: OrderAddress;
+}
+
 interface CreateUserParams {
     email: string;
     password: string;
@@ -102,6 +161,7 @@ interface SignInParams {
 }
 
 interface GetMenuParams {
-    category: string;
-    query: string;
+    category?: string;
+    query?: string;
+    limit?: number;
 }

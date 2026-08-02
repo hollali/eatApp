@@ -6,7 +6,7 @@ import * as Sentry from '@sentry/react-native';
 import useAuthStore from "@/store/auth.store";
 
 Sentry.init({
-  dsn: 'https://6683508f27f53111f3d8a088d07c3832@o4509364442759168.ingest.de.sentry.io/4509628300263504',
+  dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
 
   // Adds more context data to events (IP address, cookies, user, etc.)
   // For more information, visit: https://docs.sentry.io/platforms/react-native/data-management/data-collected/

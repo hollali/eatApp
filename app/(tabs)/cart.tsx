@@ -1,9 +1,12 @@
 import CartItem from "@/components/cartItem";
 import CustomButton from "@/components/customButton";
 import CustomHeader from "@/components/customHeader";
+import { DELIVERY_FEE, DISCOUNT } from "@/constants/order";
+import { formatPrice } from "@/lib/currency";
 import { useCartStore } from "@/store/cart.store";
 import { PaymentInfoStripeProps } from "@/type";
 import cn from "clsx";
+import { router } from "expo-router";
 import { FlatList, Text, View } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -47,27 +50,30 @@ const Cart = () => {
 
                             <PaymentInfoStripe
                                 label={`Total Items (${totalItems})`}
-                                value={`$${totalPrice.toFixed(2)}`}
+                                value={formatPrice(totalPrice)}
                             />
                             <PaymentInfoStripe
                                 label={`Delivery Fee`}
-                                value={`$5.00`}
+                                value={formatPrice(DELIVERY_FEE)}
                             />
                             <PaymentInfoStripe
                                 label={`Discount`}
-                                value={`- $0.50`}
+                                value={`- ${formatPrice(DISCOUNT)}`}
                                 valueStyle="!text-success"
                             />
                             <View className="border-t border-gray-300 my-2" />
                             <PaymentInfoStripe
                                 label={`Total`}
-                                value={`$${(totalPrice + 5 - 0.5).toFixed(2)}`}
+                                value={formatPrice(totalPrice + DELIVERY_FEE - DISCOUNT)}
                                 labelStyle="base-bold !text-dark-100"
                                 valueStyle="base-bold !text-dark-100 !text-right"
                             />
                         </View>
 
-                        <CustomButton title="Order Now" />
+                        <CustomButton
+                            title="Order Now"
+                            onPress={() => router.push("/checkout")}
+                        />
                     </View>
                 )}
             />

@@ -1,12 +1,16 @@
 import {Text, FlatList, TouchableOpacity, Platform} from 'react-native'
 import {Category} from "@/type";
 import {router, useLocalSearchParams} from "expo-router";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import cn from "clsx";
 
 const Filter = ({ categories }: { categories: Category[] }) => {
     const searchParams = useLocalSearchParams();
-    const [active, setActive] = useState(searchParams.category || '');
+    const [active, setActive] = useState<string>((searchParams.category as string) || 'all');
+
+    useEffect(() => {
+        setActive((searchParams.category as string) || 'all');
+    }, [searchParams.category]);
 
     const handlePress = (id: string) => {
         setActive(id);

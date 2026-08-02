@@ -2,13 +2,14 @@ import CartButton from "@/components/cartButton";
 import Filter from "@/components/filter";
 import MenuCard from "@/components/menuCard";
 import SearchBar from "@/components/searchBar";
+import { colors } from "@/constants";
 import { getCategories, getMenu } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 import { MenuItem } from "@/type";
 import cn from "clsx";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
-import { FlatList, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Search = () => {
@@ -76,7 +77,15 @@ const Search = () => {
             />
           </View>
         )}
-        ListEmptyComponent={() => !loading && <Text>No results</Text>}
+        ListEmptyComponent={() =>
+          loading ? (
+            <ActivityIndicator size="large" color={colors.primary} className="mt-10" />
+          ) : (
+            <View className="flex-1 items-center justify-center mt-20">
+              <Text className="body-medium text-gray-200">No results found</Text>
+            </View>
+          )
+        }
       />
     </SafeAreaView>
   );

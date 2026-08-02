@@ -1,5 +1,7 @@
 import { CartCustomization, CartStore } from "@/type";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 function areCustomizationsEqual(
     a: CartCustomization[] = [],
@@ -13,7 +15,9 @@ function areCustomizationsEqual(
     return aSorted.every((item, idx) => item.id === bSorted[idx].id);
 }
 
-export const useCartStore = create<CartStore>((set, get) => ({
+export const useCartStore = create<CartStore>()(
+    persist(
+        (set, get) => ({
     items: [],
 
     addItem: (item) => {
@@ -92,4 +96,10 @@ export const useCartStore = create<CartStore>((set, get) => ({
                 ) ?? 0;
             return total + item.quantity * (base + customPrice);
         }, 0),
-}));
+        }),
+        {
+            name: "cart-storage",
+            storage: createJSONStorage(() => AsyncStorage),
+        }
+    )
+);

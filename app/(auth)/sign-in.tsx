@@ -1,6 +1,7 @@
 import CustomButton from "@/components/customButton";
 import CustomInput from "@/components/customInput";
 import { signIn } from "@/lib/appwrite";
+import useAuthStore from "@/store/auth.store";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Text, View } from "react-native";
@@ -8,21 +9,22 @@ import * as Sentry from '@sentry/react-native';
 
 const SignIn = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { fetchAuthenticatedUser } = useAuthStore();
 	const [form, setForm] = useState({email: '', password: ''});
 	const submit = async () => {
 		const { email, password } = form;
-		if(!email || !password) return Alert.alert('Error', 'Please Enter Valid Email Address & Password');{
-			setIsSubmitting(true);
-			try {
-				//! Appwrite Sign In Logic
-				await signIn({email, password});
-				router.replace('/');
-			} catch (error : any) {
-				Alert.alert('Error', error.message);
-				Sentry.captureEvent(error);
-			} finally {
-				setIsSubmitting(false);
-			}
+		if(!email || !password) return Alert.alert('Error', 'Please Enter Valid Email Address & Password');
+
+		setIsSubmitting(true);
+		try {
+			await signIn({email, password});
+			await fetchAuthenticatedUser();
+			router.replace('/');
+		} catch (error) {
+			Alert.alert('Error', error instanceof Error ? error.message : String(error));
+			Sentry.captureException(error);
+		} finally {
+			setIsSubmitting(false);
 		}
 	}
 	return (
@@ -30,7 +32,7 @@ const SignIn = () => {
 			<CustomInput
 				placeholder="Email"
 				value={form.email}
-				onChangeText={(text) => setForm((prev) =>({...form, email: text}))}
+				onChangeText={(text) => setForm((prev) =>({...prev, email: text}))}
 				label="Enter Your Email Address"
 				keyboardType="email-address"
 				/>

@@ -1,10 +1,14 @@
-import { images } from "@/constants";
+import { colors, images } from "@/constants";
+import { formatPrice } from "@/lib/currency";
 import { useCartStore } from "@/store/cart.store";
 import { CartItemType } from "@/type";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
 const CartItem = ({ item }: { item: CartItemType }) => {
     const { increaseQty, decreaseQty, removeItem } = useCartStore();
+    const unitPrice =
+        item.price +
+        (item.customizations?.reduce((sum, c) => sum + c.price, 0) ?? 0);
     return (
         <View className="cart-item">
             <View className="flex flex-row items-center gap-x-3">
@@ -17,8 +21,13 @@ const CartItem = ({ item }: { item: CartItemType }) => {
                 </View>
                 <View>
                     <Text className="base-bold text-dark-100">{item.name}</Text>
+                    {item.customizations && item.customizations.length > 0 && (
+                        <Text className="body-regular text-gray-200 mt-0.5" numberOfLines={2}>
+                            {item.customizations.map((c) => c.name).join(", ")}
+                        </Text>
+                    )}
                     <Text className="paragraph-bold text-primary mt-1">
-                        ${item.price}
+                        {formatPrice(unitPrice)}
                     </Text>
                     <View className="flex flex-row items-center gap-x-4 mt-2">
                         <TouchableOpacity
@@ -29,7 +38,7 @@ const CartItem = ({ item }: { item: CartItemType }) => {
                                 source={images.minus}
                                 className="size-1/2"
                                 resizeMode="contain"
-                                tintColor={"#FF9C01"}
+                                tintColor={colors.primary}
                             />
                         </TouchableOpacity>
                         <Text className="base-bold text-dark-100">{item.quantity}</Text>
@@ -41,7 +50,7 @@ const CartItem = ({ item }: { item: CartItemType }) => {
                                 source={images.plus}
                                 className="size-1/2"
                                 resizeMode="contain"
-                                tintColor={"#FF9C01"}
+                                tintColor={colors.primary}
                             />
                         </TouchableOpacity>
                     </View>
