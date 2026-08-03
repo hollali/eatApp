@@ -4,6 +4,9 @@ import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-n
 const getErrorMessage = (error: unknown) =>
     error instanceof Error ? error.message : String(error);
 
+const isUnauthenticatedError = (error: unknown) =>
+    error instanceof Error && error.message.includes("missing scopes");
+
 const requireEnv = (name: string): string => {
     const value = process.env[name];
     if (!value) {
@@ -66,6 +69,22 @@ export const signIn = async ({ email, password }: SignInParams) => {
     }
 }
 
+export const recoverPassword = async ({ email, redirectUrl }: { email: string; redirectUrl: string }) => {
+    try {
+        await account.createRecovery(email, redirectUrl);
+    } catch (e) {
+        throw new Error(getErrorMessage(e));
+    }
+}
+
+export const resetPassword = async ({ userId, secret, password }: { userId: string; secret: string; password: string }) => {
+    try {
+        await account.updateRecovery(userId, secret, password);
+    } catch (e) {
+        throw new Error(getErrorMessage(e));
+    }
+}
+
 export const getCurrentUser = async () => {
     try {
         const currentAccount = await account.get();
@@ -81,6 +100,7 @@ export const getCurrentUser = async () => {
 
         return user;
     } catch (e) {
+        if (isUnauthenticatedError(e)) return null;
         throw new Error(getErrorMessage(e));
     }
 }

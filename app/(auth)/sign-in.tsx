@@ -43,6 +43,9 @@ const SignIn = () => {
 				label="Enter Your Password"
 				secureTextEntry={true}
 				/>
+				<Link href="/forgot-password" className="base-bold text-primary self-end -mt-5">
+					Forgot Password?
+				</Link>
 				<CustomButton
 				title="Sign In"
 				isLoading={isSubmitting}
