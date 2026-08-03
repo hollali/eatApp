@@ -121,6 +121,8 @@ export interface OrderAddress {
     street: string;
     city: string;
     note?: string;
+    latitude?: number;
+    longitude?: number;
 }
 
 export interface Order extends Models.Document {

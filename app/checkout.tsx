@@ -1,9 +1,11 @@
 import CustomButton from "@/components/customButton";
 import CustomHeader from "@/components/customHeader";
 import CustomInput from "@/components/customInput";
+import { images } from "@/constants";
 import { DELIVERY_FEE, DISCOUNT } from "@/constants/order";
 import { createOrder } from "@/lib/appwrite";
 import { formatPrice } from "@/lib/currency";
+import { getAddressFromCurrentLocation, GeocodedAddress } from "@/lib/location";
 import { initiateMobileMoneyPayment } from "@/lib/payment";
 import { useCartStore } from "@/store/cart.store";
 import useAuthStore from "@/store/auth.store";
@@ -11,7 +13,7 @@ import { MobileMoneyProvider, PaymentMethod } from "@/type";
 import cn from "clsx";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const PROVIDERS: MobileMoneyProvider[] = ["MTN", "AirtelTigo", "Telecel"];
@@ -27,12 +29,32 @@ const Checkout = () => {
     const [provider, setProvider] = useState<MobileMoneyProvider>("MTN");
     const [phone, setPhone] = useState("");
     const [isPlacing, setIsPlacing] = useState(false);
+    const [geoAddress, setGeoAddress] = useState<GeocodedAddress | null>(null);
+    const [isLocating, setIsLocating] = useState(false);
 
     if (!isAuthenticated) return null;
 
     const subtotal = getTotalPrice();
     const total = subtotal + DELIVERY_FEE - DISCOUNT;
     const totalItems = getTotalItems();
+
+    const handleDetectLocation = async () => {
+        if (isLocating) return;
+        setIsLocating(true);
+        try {
+            const address = await getAddressFromCurrentLocation();
+            setGeoAddress(address);
+            setStreet(address.street);
+            setCity(address.city);
+        } catch (error) {
+            Alert.alert(
+                "Location Error",
+                error instanceof Error ? error.message : String(error)
+            );
+        } finally {
+            setIsLocating(false);
+        }
+    };
 
     const handlePlaceOrder = async () => {
         if (totalItems === 0) return;
@@ -73,7 +95,13 @@ const Checkout = () => {
                 paymentMethod,
                 paymentPhone: paymentMethod === "mobile_money" ? phone : undefined,
                 mobileMoneyProvider: paymentMethod === "mobile_money" ? provider : undefined,
-                address: { street: street.trim(), city: city.trim(), note: note.trim() || undefined },
+                address: {
+                    street: street.trim(),
+                    city: city.trim(),
+                    note: note.trim() || undefined,
+                    latitude: geoAddress?.latitude,
+                    longitude: geoAddress?.longitude,
+                },
             });
 
             clearCart();
@@ -107,6 +135,28 @@ const Checkout = () => {
                         <Text className="h3-bold text-dark-100 mb-4">
                             Delivery Address
                         </Text>
+                        <TouchableOpacity
+                            onPress={handleDetectLocation}
+                            disabled={isLocating}
+                            className={cn(
+                                "flex-row items-center justify-center gap-2 rounded-2xl border border-primary py-3.5 mb-4",
+                                isLocating ? "bg-primary/5 opacity-60" : "bg-primary/5 active:bg-primary/10"
+                            )}
+                        >
+                            {isLocating ? (
+                                <ActivityIndicator size="small" color="#FE8C00" />
+                            ) : (
+                                <Image source={images.location} className="size-4" tintColor="#FE8C00" />
+                            )}
+                            <Text className="paragraph-semibold text-primary">
+                                {isLocating ? "Detecting location..." : "Use my current location"}
+                            </Text>
+                        </TouchableOpacity>
+                        {geoAddress && (
+                            <Text className="body-regular text-gray-200 mb-4">
+                                Location detected: {geoAddress.latitude.toFixed(4)}, {geoAddress.longitude.toFixed(4)}
+                            </Text>
+                        )}
                         <View className="gap-5">
                             <CustomInput
                                 label="Street / Area"

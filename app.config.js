@@ -51,6 +51,12 @@ module.exports = {
           photosPermission: "Allow eatApp to access your photos so you can update your profile picture.",
         },
       ],
+      [
+        "expo-location",
+        {
+          locationWhenInUsePermission: "Allow eatApp to use your location so we can detect your delivery address.",
+        },
+      ],
     ],
     experiments: {
       typedRoutes: true,
